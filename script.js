@@ -91,11 +91,17 @@ function checkWinner() {
                         lowertext.textContent = nameone + ", you win! To play again, please refresh.";
                         restartButton.classList.toggle("hide")
                         restartButton.classList.toggle("hide")
+                        aimovebutton.classList.toggle("hide")
+                        aimovebutton.classList.toggle("hide")
+                        aimovebutton.classList.toggle("hide")
                         gameboard.gameStatus = 1;
                     } else if (w1 == "O") {
                         lowertext.textContent = nametwo + ", you win! To play again, please refresh.";
                         restartButton.classList.toggle("hide")
                         restartButton.classList.toggle("hide")
+                        aimovebutton.classList.toggle("hide")
+                        aimovebutton.classList.toggle("hide")
+                        aimovebutton.classList.toggle("hide")
                         gameboard.gameStatus = 1;
                     } else {
                         console.log("error 538")
@@ -117,7 +123,10 @@ function checkWinner() {
 function endGame() {
     if (gameboard.gameStatus == 0) {
         console.log("its a tie")
-        lowertext.textContent = "It's a tie! <br> Refresh to play again."
+        lowertext.textContent = "It's a tie! Refresh to play again."
+        aimovebutton.classList.toggle("hide")
+        aimovebutton.classList.toggle("hide")
+        aimovebutton.classList.toggle("hide")
     }
 }
 
@@ -127,10 +136,16 @@ inputs.classList.toggle("hidetwo")
 namesbutton.addEventListener("click", function () {
     nameone = nameoneinput.value;
     nametwo = nametwoinput.value;
-    inputs.classList.toggle("hidetwo")
-    lowertext.textContent = `Welcome ${nameone} and ${nametwo}. ${nameone}, please use X. ${nametwo}, please use O. `
-    gameboard.gameStatus = 0;
-    aimovebutton.classList.toggle("hide")
+    if (nameone !== "" && nametwo !== "") {
+        inputs.classList.toggle("hidetwo")
+        lowertext.textContent = `Welcome ${nameone} and ${nametwo}. ${nameone}, please use X. ${nametwo}, please use O. `
+        gameboard.gameStatus = 0;
+        aimovebutton.classList.toggle("hide")
+    } else if (nameone == "" || nametwo == "") {
+        alert("Please enter your name x")
+    } else {
+        console.log("eror 481")
+    }
 })
 
 //restart button
@@ -138,30 +153,30 @@ restartButton.addEventListener("click", function () {
     location.reload()
 })
 
-function aimove(){
-random = Math.floor(Math.random()*9)
-console.log(random)
-if (gameboard.gameStatus == 0) {
-    if (gameboard.gbStatus[random] == "false") {
-        gameboard.gbCells[random].textContent = displayFlow.nextTurn
-        gameboard.gbStatus[random] = "true"
-        if (displayFlow.nextTurn == "O") {
-            displayFlow.nextTurn = "X"
-        } else if (displayFlow.nextTurn == "X") {
-            displayFlow.nextTurn = "O"
-        } else
-            (console.log("error 352"))
-        gameboard.turnCount = gameboard.turnCount + 1;
-    } else if (gameboard.gbStatus[random] == "true") {
-        console.log("taken")
-        aimove()
-    } else{
-        console.log("error 239")
-    }
+function aimove() {
+    random = Math.floor(Math.random() * 9)
+    console.log(random)
+    if (gameboard.gameStatus == 0) {
+        if (gameboard.gbStatus[random] == "false") {
+            gameboard.gbCells[random].textContent = displayFlow.nextTurn
+            gameboard.gbStatus[random] = "true"
+            if (displayFlow.nextTurn == "O") {
+                displayFlow.nextTurn = "X"
+            } else if (displayFlow.nextTurn == "X") {
+                displayFlow.nextTurn = "O"
+            } else
+                (console.log("error 352"))
+            gameboard.turnCount = gameboard.turnCount + 1;
+        } else if (gameboard.gbStatus[random] == "true") {
+            console.log("taken")
+            aimove()
+        } else {
+            console.log("error 239")
+        }
         checkWinner()
-} 
+    }
 }
 
-aimovebutton.addEventListener("click", function(){
+aimovebutton.addEventListener("click", function () {
     aimove()
 })
