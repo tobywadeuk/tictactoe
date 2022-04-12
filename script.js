@@ -89,19 +89,11 @@ function checkWinner() {
                     gameboard.gbCells[comboArray[2]].style.color = "#A58CA5"
                     if (w1 == "X") {
                         lowertext.textContent = nameone + ", you win! To play again, please refresh.";
-                        restartButton.classList.toggle("hide")
-                        restartButton.classList.toggle("hide")
-                        aimovebutton.classList.toggle("hide")
-                        aimovebutton.classList.toggle("hide")
-                        aimovebutton.classList.toggle("hide")
+                        endgameButtons()
                         gameboard.gameStatus = 1;
                     } else if (w1 == "O") {
                         lowertext.textContent = nametwo + ", you win! To play again, please refresh.";
-                        restartButton.classList.toggle("hide")
-                        restartButton.classList.toggle("hide")
-                        aimovebutton.classList.toggle("hide")
-                        aimovebutton.classList.toggle("hide")
-                        aimovebutton.classList.toggle("hide")
+                        endgameButtons()
                         gameboard.gameStatus = 1;
                     } else {
                         console.log("error 538")
@@ -124,9 +116,7 @@ function endGame() {
     if (gameboard.gameStatus == 0) {
         console.log("its a tie")
         lowertext.textContent = "It's a tie! Refresh to play again."
-        aimovebutton.classList.toggle("hide")
-        aimovebutton.classList.toggle("hide")
-        aimovebutton.classList.toggle("hide")
+        endgameButtons()
     }
 }
 
@@ -180,3 +170,8 @@ function aimove() {
 aimovebutton.addEventListener("click", function () {
     aimove()
 })
+
+function endgameButtons(){
+    aimovebutton.classList.add("hidetwo")
+    restartButton.classList.add("show")
+}
