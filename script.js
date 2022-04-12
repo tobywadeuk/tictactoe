@@ -16,6 +16,8 @@ let inputs = document.querySelector(".inputs")
 let nameone = ""
 let nametwo = ""
 let restartButton = document.querySelector(".restart")
+let random = 0;
+let aimovebutton = document.querySelector(".aimovebutton")
 
 let gameboard = {
     gbArr: [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -77,9 +79,7 @@ function checkWinner() {
             if ((gameboard.gbStatus[comboArray[0]] == "true") && (gameboard.gbStatus[comboArray[1]] == "true") && (gameboard.gbStatus[comboArray[2]] == "true")) {
 
                 let w1 = gameboard.gbCells[comboArray[0]].textContent; //g
-
                 let w2 = gameboard.gbCells[comboArray[1]].textContent; //h
-
                 let w3 = gameboard.gbCells[comboArray[2]].textContent; //f
 
                 if (w1 === w2 && w1 === w3 && w1 !== null) {
@@ -130,9 +130,38 @@ namesbutton.addEventListener("click", function () {
     inputs.classList.toggle("hidetwo")
     lowertext.textContent = `Welcome ${nameone} and ${nametwo}. ${nameone}, please use X. ${nametwo}, please use O. `
     gameboard.gameStatus = 0;
+    aimovebutton.classList.toggle("hide")
 })
 
 //restart button
 restartButton.addEventListener("click", function () {
     location.reload()
+})
+
+function aimove(){
+random = Math.floor(Math.random()*9)
+console.log(random)
+if (gameboard.gameStatus == 0) {
+    if (gameboard.gbStatus[random] == "false") {
+        gameboard.gbCells[random].textContent = displayFlow.nextTurn
+        gameboard.gbStatus[random] = "true"
+        if (displayFlow.nextTurn == "O") {
+            displayFlow.nextTurn = "X"
+        } else if (displayFlow.nextTurn == "X") {
+            displayFlow.nextTurn = "O"
+        } else
+            (console.log("error 352"))
+        gameboard.turnCount = gameboard.turnCount + 1;
+    } else if (gameboard.gbStatus[random] == "true") {
+        console.log("taken")
+        aimove()
+    } else{
+        console.log("error 239")
+    }
+        checkWinner()
+} 
+}
+
+aimovebutton.addEventListener("click", function(){
+    aimove()
 })
